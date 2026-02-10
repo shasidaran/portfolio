@@ -1,48 +1,72 @@
-// script.js - Smooth scrolling and reveal animations
-// Wait for DOM to load
-document.addEventListener("DOMContentLoaded", function () {
-  // Configuration
-  const SCROLL_THRESHOLD = 0.1;
+// Import Firebase SDKs
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
 
-  // Section reveal on scroll using Intersection Observer
-  const sections = document.querySelectorAll(".section");
-  const observerOptions = {
-    threshold: SCROLL_THRESHOLD,
-  };
+// Your Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyA8uV3peJ-eYFlKZUcoh9KCl3Ccvz7hbyw",
+  authDomain: "portfolio-c8144.firebaseapp.com",
+  projectId: "portfolio-c8144",
+  storageBucket: "portfolio-c8144.firebasestorage.app",
+  messagingSenderId: "487223212225",
+  appId: "1:487223212225:web:f96bc7352e1bf013373c40"
+};
 
-  // Observer callback - adds 'active' class when section comes into view
-  const observerCallback = (entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
-        observer.unobserve(entry.target);
-      }
-    });
-  };
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
-  const observer = new IntersectionObserver(observerCallback, observerOptions);
+// Form submission logic
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("contact-form");
+  const messageBox = document.getElementById("form-message");
 
-  // Observe all sections
-  sections.forEach((section) => {
-    observer.observe(section);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+
+    // Show "sending..." feedback
+    messageBox.textContent = "Sending...";
+    messageBox.classList.remove("error");
+
+    try {
+      const docRef = await addDoc(collection(db, "contact_messages"), {
+        name,
+        email,
+        message,
+        createdAt: serverTimestamp()
+      });
+
+      console.log("Message stored with ID:", docRef.id);
+      messageBox.textContent = "Message sent successfully!";
+      messageBox.classList.remove("error");
+      form.reset();
+    } catch (error) {
+      console.error("analytics error:", error);
+      messageBox.textContent = "Error sending message.";
+      messageBox.classList.add("error");
+    }
   });
 
-  // Smooth scroll for navigation links
-  const navLinks = document.querySelectorAll("nav a");
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const targetId = link.getAttribute("href");
-      // Only prevent default if it's an internal link
-      if (targetId.startsWith("#")) {
-        e.preventDefault();
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      }
+  // Scroll animations
+  const faders = document.querySelectorAll('.fade-in');
+
+  const appearOptions = {
+    threshold: 0.2
+  };
+
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
     });
+  }, appearOptions);
+
+  faders.forEach(fader => {
+    appearOnScroll.observe(fader);
   });
 });
