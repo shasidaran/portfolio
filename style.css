@@ -1,0 +1,294 @@
+/* ===============================
+   Reset & Root Variables
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #3498db;
+  --secondary: #2c3e50;
+  --accent: #e67e22;
+  --light: #ecf0f1;
+  --dark: #333;
+  --font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===============================
+   Global Styles
+================================ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--dark);
+  background-color: var(--light);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ===============================
+   Header & Navigation
+================================ */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: var(--light);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 18px 40px;
+}
+
+nav {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  padding: 8px 14px;
+  border-radius: 5px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* ===============================
+   Hero Section
+================================ */
+#hero {
+  height: 100vh;
+  margin-top: 80px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.hero-content h2 {
+  font-weight: 300;
+  margin-bottom: 15px;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+/* ===============================
+   Buttons
+================================ */
+.btn {
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* ===============================
+   Animated Sections
+================================ */
+.section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  padding: 80px 40px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: var(--secondary);
+}
+
+/* ===============================
+   About
+================================ */
+#about p {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+/* ===============================
+   Education
+================================ */
+.education-list {
+  max-width: 800px;
+  margin: auto;
+}
+
+.education-list li {
+  background: rgba(52, 152, 219, 0.06);
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary);
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.education-list h3 {
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+/* ===============================
+   Skills
+================================ */
+.skills-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.skill-card {
+  background-color: var(--secondary);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 20px;
+  transition: transform 0.3s;
+}
+
+.skill-card:hover,
+.skill-card:focus {
+  transform: scale(1.1);
+}
+
+/* ===============================
+   Contact
+================================ */
+#contact {
+  padding: 80px 40px;
+  max-width: 1000px;
+  margin: auto;
+  text-align: center;
+}
+
+#contact form {
+  max-width: 500px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#contact input,
+#contact textarea {
+  padding: 12px 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+}
+
+#contact textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+#form-message {
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+#form-message.success {
+  color: green;
+}
+
+#form-message.error {
+  color: red;
+}
+
+/* ===============================
+   Footer
+================================ */
+footer {
+  background-color: var(--secondary);
+  color: #fff;
+  text-align: center;
+  padding: 25px;
+  margin-top: 40px;
+}
+
+/* ===============================
+   Responsive
+================================ */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .hero-content h1 {
+    font-size: 2.4rem;
+  }
+
+  .section {
+    padding: 60px 20px;
+  }
+
+  #contact {
+    padding: 60px 20px;
+  }
+}

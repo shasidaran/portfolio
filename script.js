@@ -1,20 +1,25 @@
-// Import Firebase SDKs
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+// Firebase imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-// Your Firebase configuration
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA8uV3peJ-eYFlKZUcoh9KCl3Ccvz7hbyw",
-  authDomain: "portfolio-c8144.firebaseapp.com",
-  projectId: "portfolio-c8144",
-  storageBucket: "portfolio-c8144.firebasestorage.app",
-  messagingSenderId: "487223212225",
-  appId: "1:487223212225:web:f96bc7352e1bf013373c40"
+  apiKey: "AIzaSyA6UREfCNw0Vc2rrMnWG4O0srzkZ_2UL6Y",
+  authDomain: "portfolio2-6b4e4.firebaseapp.com",
+  projectId: "portfolio2-6b4e4",
+  storageBucket: "portfolio2-6b4e4.firebasestorage.app",
+  messagingSenderId: "355283880301",
+  appId: "1:355283880301:web:b8938247c161c6a215b264"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const db = getFirestore(app); // ✅ Correct capitalization
 
 // Form submission logic
 document.addEventListener("DOMContentLoaded", () => {
@@ -30,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Show "sending..." feedback
     messageBox.textContent = "Sending...";
-    messageBox.classList.remove("error");
+    messageBox.classList.remove("error", "success");
 
     try {
       const docRef = await addDoc(collection(db, "contact_messages"), {
@@ -43,16 +48,18 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Message stored with ID:", docRef.id);
       messageBox.textContent = "Message sent successfully!";
       messageBox.classList.remove("error");
+      messageBox.classList.add("success");
       form.reset();
-    } catch (error) {
-      console.error("analytics error:", error);
+    } catch (err) {
+      console.error(err);
       messageBox.textContent = "Error sending message.";
+      messageBox.classList.remove("success");
       messageBox.classList.add("error");
     }
   });
 
   // Scroll animations
-  const faders = document.querySelectorAll('.fade-in');
+  const faders = document.querySelectorAll(".fade-in");
 
   const appearOptions = {
     threshold: 0.2
@@ -61,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const appearOnScroll = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add('visible');
+      entry.target.classList.add("visible"); // ✅ Matches CSS .section.visible
       observer.unobserve(entry.target);
     });
   }, appearOptions);
